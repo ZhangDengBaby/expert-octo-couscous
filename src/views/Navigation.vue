@@ -30,7 +30,7 @@
             </a-sub-menu>
         </a-menu>
         <div class="Search">
-            <a-input-search v-model:value="basic.searchValue" placeholder="input search text" enter-button
+            <a-input-search v-model="basic.searchValue" placeholder="input search text" enter-button
                 @search="onSearch" />
         </div>
         <div class="user">
