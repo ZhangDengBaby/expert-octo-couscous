@@ -1,13 +1,14 @@
+// 示例已弃用
 // http.js封装axios的请求方式(get请求、post请求) 
 // 封装axios超时请求时间
 // token设置
 
 
 import axios from 'axios' // 引用axios
-import config from '@/api/config'
+import { baseUrl } from '@/api/config'
 import { message } from 'ant-design-vue'
 
-const _baseUrl = config.baseUrl.dev // 使用到代理
+const _baseUrl = baseUrl.dev // 使用到代理
 const apiUrl = _baseUrl
 // axios 配置
 axios.defaults.timeout = 120000 // 设置接口响应时间

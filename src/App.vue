@@ -2,12 +2,22 @@
 import { RouterView, useRouter } from 'vue-router'
 import Navigation from './views/Navigation.vue'
 import { ref } from 'vue';
+import { getCookie } from '@/utils/utils'
 import { Layout as ALayout, LayoutHeader as ALayoutHeader, LayoutContent as ALayoutContent, message } from 'ant-design-vue'
+
 let router = useRouter()
 let isLogin = ref(true)
 router.beforeEach(to => {
   if (to.name === 'login' || to.name === 'registration') {
     isLogin.value = false
+  } else {
+    let token = getCookie('token')
+    if (!token) {
+      router.push('/login')
+      isLogin.value = false
+    } else {
+      isLogin.value = true
+    }
   }
 })
 message.config({

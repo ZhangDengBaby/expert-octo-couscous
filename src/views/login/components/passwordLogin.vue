@@ -34,7 +34,10 @@
 <script lang='ts'>
 import { defineComponent, reactive, ref } from 'vue'
 import type { primitiveTypes } from '@/views/interface/public' // 常用TS接口引入
+import { get } from '@/api/index'
+import { setCookie } from '@/utils/utils'
 import { Form, FormItem, Input, InputPassword, Checkbox, Button, Popconfirm, message } from 'ant-design-vue'
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
     name: 'passwordLogin',
@@ -48,6 +51,7 @@ export default defineComponent({
         aPopconfirm:Popconfirm
     },
     setup() {
+        const router = useRouter()
         interface FormState { // 用户名、密码、相关事项ts验证
             username: string | number,
             password: string | number,
@@ -62,9 +66,18 @@ export default defineComponent({
             password: '',
             remember: false,
         });
-        const onFinish = (values: any) => { // 登录验证通过
+        const onFinish = async (values: any) => { // 登录验证通过
             if (values.remember) {
-                console.log('Success:', values);
+                let url = `/user/sigin/${values.username}/${values.password}`
+                let login = await get(url)
+                console.log(1111, login);
+                
+                if ( login && login.status == 200) {
+                    setCookie( 'token', login.data , 1)
+                    router.push('/home')
+                }
+                // setCookie( 'token', login , 1)
+                // router.replace('/')
             } else {
                 basic.popconfirmTip = '未同意相关声明'
                 visible.value = true

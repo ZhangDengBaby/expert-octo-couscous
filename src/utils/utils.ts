@@ -7,3 +7,10 @@ export const setCookie = (name: string, value: string, time: number) => { // 设
     let expires = "expires=" + d.toUTCString();
     document.cookie = name + "=" + value + "; " + expires;
 }
+export const JudgeEnvironment = ():string => { // 判断当前环境
+    let urlName: string = location.hostname
+    if (urlName === 'localhost') {
+        return 'local'
+    }
+    return 'dev'
+}

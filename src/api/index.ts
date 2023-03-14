@@ -1,7 +1,6 @@
 //请求方法封装
 import axios from './request'
 
-
 /**
  * 封装get方法
  * @param url
