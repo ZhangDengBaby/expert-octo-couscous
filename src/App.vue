@@ -21,7 +21,7 @@ router.beforeEach(to => {
   }
 })
 message.config({
-  duration: 100,
+  duration: 3,
   maxCount: 3,
   prefixCls: 'my-message',
 })
@@ -45,8 +45,10 @@ message.config({
   left: 50%;
   transform: translate(-50%, -50%);
   box-shadow: 0 0 15px rgb(199, 197, 197);
-  padding: 2px 12px;
   border-radius: 4px;
+  .my-message-notice {
+    padding: 2px 12px;
+  }
 
   svg {
     color: #1890ff;
