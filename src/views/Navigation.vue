@@ -8,11 +8,11 @@
                 </template>
                 主页
             </a-menu-item>
-            <a-menu-item key="about">
+            <a-menu-item key="three">
                 <template #icon>
                     <appstore-outlined />
                 </template>
-                Navigation Two
+                Three.js
             </a-menu-item>
             <a-sub-menu key="sub1">
                 <template #icon>
