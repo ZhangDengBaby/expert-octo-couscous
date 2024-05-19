@@ -8,11 +8,17 @@
                 </template>
                 主页
             </a-menu-item>
-            <a-menu-item key="three">
+            <!-- <a-menu-item key="three">
                 <template #icon>
                     <appstore-outlined />
                 </template>
                 Three.js
+            </a-menu-item> -->
+            <a-menu-item key="music">
+                <template #icon>
+                    <CustomerServiceOutlined />
+                </template>
+                音乐
             </a-menu-item>
             <a-sub-menu key="sub1">
                 <template #icon>
@@ -34,8 +40,9 @@
                 @search="onSearch" />
         </div>
         <div class="user">
-            <div @click="loginClick">登录</div>
-            <div @click="registrationClick">注册</div>
+            <div @click="loginClick">退出</div>
+            <!-- <div @click="loginClick">登录</div> -->
+            <!-- <div @click="registrationClick">注册</div> -->
         </div>
     </div>
 </template>
@@ -43,7 +50,7 @@
 <script lang='ts'>
 import { defineComponent, ref, reactive } from 'vue'
 import { Menu, MenuItem, MenuItemGroup, SubMenu, InputSearch } from 'ant-design-vue'
-import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons-vue';
+import { MailOutlined, AppstoreOutlined, SettingOutlined, CustomerServiceOutlined } from '@ant-design/icons-vue';
 import { useRouter, useRoute } from 'vue-router';
 import type { primitiveTypes } from './interface/public' // 常用TS接口引入
 export default defineComponent({
@@ -51,6 +58,7 @@ export default defineComponent({
         MailOutlined,
         AppstoreOutlined,
         SettingOutlined,
+        CustomerServiceOutlined,
         AMenu: Menu,
         AMenuItem: MenuItem,
         AMenuItemGroup: MenuItemGroup,
@@ -61,14 +69,14 @@ export default defineComponent({
     setup() {
         const router = useRouter()
         const route = useRoute()
-        const current = ref<string[]>(['home']);
+        let current = ref<string[]>(['home']);
         let basic = reactive<primitiveTypes>({
             searchValue: ''
         })
         router.beforeEach((to) => {
-            // @ts-ignore
-            current.value = [to.name || 'home']
+            current.value = [to.name?.toString() || 'home']
         })
+        // 点击菜单跳转页面
         let menuHandleSelect = () => {
             router.push('/' + current.value[0])
         }

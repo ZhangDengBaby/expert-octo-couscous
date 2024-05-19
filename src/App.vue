@@ -11,13 +11,13 @@ router.beforeEach(to => {
   if (to.name === 'login' || to.name === 'registration') {
     isLogin.value = false
   } else {
-    let token = getCookie('token')
-    if (!token) {
-      router.push('/login')
-      isLogin.value = false
-    } else {
-      isLogin.value = true
-    }
+    // let token = getCookie('token')
+    // if (!token) {
+    //   router.push('/login')
+    //   isLogin.value = false
+    // } else {
+    isLogin.value = true
+    // }
   }
 })
 message.config({
@@ -46,6 +46,7 @@ message.config({
   transform: translate(-50%, -50%);
   box-shadow: 0 0 15px rgb(199, 197, 197);
   border-radius: 4px;
+
   .my-message-notice {
     padding: 2px 12px;
   }

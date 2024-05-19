@@ -12,7 +12,8 @@ const _baseUrl = baseUrl.dev // 使用到代理
 const apiUrl = _baseUrl
 // axios 配置
 axios.defaults.timeout = 120000 // 设置接口响应时间
-axios.defaults.baseURL = 'http://192.168.105.42:8088' // 这是调用数据接口,公共接口url+调用接口名
+// axios.defaults.baseURL = 'http://192.168.105.42:8088' // 这是调用数据接口,公共接口url+调用接口名
+axios.defaults.baseURL = 'http://http://127.0.0.1:9090' // 这是调用数据接口,公共接口url+调用接口名
 
 // 增加token（先写了个固定的token，实际项目中应该是通过接口获取到token）
 axios.defaults.headers.common['X-Access-Token'] = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MzkxMTYzMzcsInVzZXJuYW1lIjoiYWRtaW4ifQ.YPJ7BV_Pg27NtPVk0FfoYsTXRpR35KXA64mMDibUzHI';
