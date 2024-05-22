@@ -4,6 +4,8 @@
     <Left class="left" :selectedKey="selectedKey" @leftchange="leftchange"></Left>
     <Right class="right" :selectedKey="selectedKey"></Right>
   </div>
+  <div class="player">
+  </div>
 </template>
 
 <script lang='ts'>
@@ -34,10 +36,17 @@ export default defineComponent({
 <style lang='less' scoped>
 .musicBox {
   display: flex;
-  height: calc(~"100vh - 62px");
+  height: calc(~"100vh - 172px");
 
   .left {
     width: 320px;
   }
+
+}
+
+.player {
+  height: 110px;
+  width: 100%;
+  background-color: #E5E7EE;
 }
 </style>

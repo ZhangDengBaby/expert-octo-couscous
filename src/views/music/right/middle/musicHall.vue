@@ -1,19 +1,18 @@
-<!-- 右侧顶部搜索 -->
+<!-- 右侧中部音乐馆 -->
 <template>
     <div class="middleBox">
-
+        右侧中部音乐馆
     </div>
 </template>
 
 <script lang='ts'>
 import { defineComponent, ref } from 'vue'
-import Recommendation from './recommendation.vue'
 
 export default defineComponent({
     components: {
     },
     props: ['selectedKey'],
-    name: 'home',
+    name: 'musicHall',
     setup(props, ctx) {
 
         return {

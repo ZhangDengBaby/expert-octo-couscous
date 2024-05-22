@@ -2,9 +2,9 @@ import axios from 'axios'
 import { message } from 'ant-design-vue'
 
 // 根据环境不同引入不同api地址（可以编写不同的文件进行环境区分）
-import { baseUrl} from '@/api/config'
-import { getCookie, setCookie, JudgeEnvironment } from '@/utils/utils'
-let name:string = JudgeEnvironment()
+import { baseUrl } from '@/api/config'
+import { getCookie, setCookie, judgeEnvironment } from '@/utils/utils'
+let name: string = judgeEnvironment()
 // create an axios instance
 const service = axios.create({
     baseURL: baseUrl[name] || '', // url = base api url + request url 这是调用数据接口,公共接口url+调用接口名

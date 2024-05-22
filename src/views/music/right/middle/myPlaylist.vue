@@ -1,19 +1,18 @@
-<!-- 右侧顶部搜索 -->
+<!-- 右侧中部我的歌单 -->
 <template>
     <div class="middleBox">
-
+        右侧中部我的歌单
     </div>
 </template>
 
 <script lang='ts'>
 import { defineComponent, ref } from 'vue'
-import Recommendation from './recommendation.vue'
 
 export default defineComponent({
     components: {
     },
     props: ['selectedKey'],
-    name: 'home',
+    name: 'myPlaylist',
     setup(props, ctx) {
 
         return {

@@ -7,8 +7,6 @@
 
 <script lang='ts'>
 import { defineComponent, ref } from 'vue'
-import { } from '@ant-design/icons-vue';
-import type { primitiveTypes } from '../../interface/public' // 常用TS接口引入
 import TopSearch from './topSearch.vue'
 import Middle from './middle/index.vue'
 
@@ -30,5 +28,6 @@ export default defineComponent({
 <style lang='less' scoped>
 .musicRightBox {
     width: 100%;
+    overflow: auto;
 }
 </style>
