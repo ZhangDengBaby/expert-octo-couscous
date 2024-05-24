@@ -40,7 +40,7 @@
                 @search="onSearch" />
         </div>
         <div class="user">
-            <div @click="loginClick">退出</div>
+            <div @click="returnClick">退出</div>
             <!-- <div @click="loginClick">登录</div> -->
             <!-- <div @click="registrationClick">注册</div> -->
         </div>
@@ -53,6 +53,8 @@ import { Menu, MenuItem, MenuItemGroup, SubMenu, InputSearch } from 'ant-design-
 import { MailOutlined, AppstoreOutlined, SettingOutlined, CustomerServiceOutlined } from '@ant-design/icons-vue';
 import { useRouter, useRoute } from 'vue-router';
 import type { primitiveTypes } from './interface/public' // 常用TS接口引入
+import { setCookie } from '@/utils/utils'
+
 export default defineComponent({
     components: {
         MailOutlined,
@@ -89,13 +91,19 @@ export default defineComponent({
         const registrationClick = () => { // 点击跳转注册页面
             router.push('/registration')
         }
+        const returnClick = () => { // 点击跳转登录页面
+            router.push('/login')
+            setCookie( 'login', '' , 0)
+        }
+        
         return {
             basic,
             menuHandleSelect,
             current,
             onSearch,
             loginClick,
-            registrationClick
+            registrationClick,
+            returnClick
         }
     }
 })

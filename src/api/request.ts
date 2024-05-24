@@ -10,6 +10,7 @@ const service = axios.create({
     baseURL: baseUrl[name] || '', // url = base api url + request url 这是调用数据接口,公共接口url+调用接口名
     timeout: 6000 // 设置接口响应时间
 })
+console.log(1111111, baseUrl[name]);
 
 // 设置 post、get默认 Content-Type
 service.defaults.headers.post['Content-Type'] = 'application/json'

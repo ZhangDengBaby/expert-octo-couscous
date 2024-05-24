@@ -2,7 +2,6 @@
 <template>
     <div class="middleBox">
         <component :is="middle"></component>
-
         <Player></Player>
     </div>
 </template>

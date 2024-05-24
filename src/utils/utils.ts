@@ -12,5 +12,5 @@ export const judgeEnvironment = (): string => { // 判断当前环境
     if (urlName === 'localhost') {
         return 'local'
     }
-    return 'dev'
+    return 'pro'
 }

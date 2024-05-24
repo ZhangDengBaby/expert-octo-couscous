@@ -1,7 +1,12 @@
 <!-- 歌曲详情 -->
 <template>
     <div class="songDetailBox">
-        <a-table :columns="columns" :data-source="data" :pagination="false">
+        <a-table :columns="columns" :customRow="(record: object) => {
+            return {
+                onDblclick: () => onDblclick(record), // 双击行
+            };
+        }"
+  :data-source="data" :pagination="false">
         </a-table>
         <div class="page">
             <a-pagination v-model:current="currentPage" @change="pageChange" :pageSizeOptions="pageSizeOptions"
@@ -12,10 +17,10 @@
 
 <script lang='ts'>
 import { defineComponent, ref, reactive, watch } from 'vue'
-import type { primitiveTypes } from '@/views/interface/public.ts' // 常用TS接口引入
+import type { primitiveTypes } from '@/views/interface/public' // 常用TS接口引入
 import { post } from '@/api/index'
 import middleStore from '@/stores/middleStores'
-import type { JSX } from '@babel/types'
+import EventBus from '@/api/eventBus'
 
 export default defineComponent({
     components: {
@@ -48,9 +53,15 @@ export default defineComponent({
                 dataIndex: 'operation',
                 key: 'operation',
             }])
-        let data = reactive<primitiveTypes[]>([])
+        let data = reactive<primitiveTypes[]>([{
+            "id": 14,
+            "songName": "当你",
+            "singerName": "林俊杰",
+            "keyValue": "music/60058622883.mp3",
+            "duration": ""
+        }])
         let pageSizeOptions = ref<string[]>(['10', '20', '50'])
-        let total = ref<number>(100)
+        let total = ref<number>(0)
         let currentPage = ref<number>(1)
         store.$subscribe((mutation, state) => {
             if (state.middle === "SearchDetails") searchData(1, 10)
@@ -63,7 +74,9 @@ export default defineComponent({
             let url = `/music/querybyname`
             let parm = {
                 songName: '',
-                singerName: ''
+                singerName: '',
+                currentPage,
+                pageSize
             }
             if (props.type === '1') {
                 parm.songName = store.searchValue
@@ -71,10 +84,11 @@ export default defineComponent({
                 parm.singerName = store.searchValue
             }
             let res = await post(url, parm)
-            console.log(1111, res);
 
-            if (res && res.code === 200) {
-                data.splice(0, Infinity, ...res.data)
+            if (res && res.status === 200) {
+                console.log(2222, res.data.list);
+                data.splice(0, Infinity, ...res.data.list)
+                total.value = res.data.total
             }
         }
         // 分页、排序、筛选变化时触发
@@ -82,8 +96,12 @@ export default defineComponent({
             console.log(page, pageSize);
             searchData(page, pageSize)
         }
+        let onDblclick = (record:object) => {
+            console.log(record);
+            EventBus.emit('playMusic', record)
+        }
         return {
-            columns, data, pageChange, pageSizeOptions, currentPage, total
+            columns, data, pageChange, pageSizeOptions, currentPage, total, onDblclick
         };
     }
 })

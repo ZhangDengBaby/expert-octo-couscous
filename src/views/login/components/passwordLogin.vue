@@ -73,11 +73,9 @@ export default defineComponent({
                 console.log(1111, login);
                 
                 if ( login && login.status == 200) {
-                    setCookie( 'token', login.data , 1)
+                    setCookie( 'login', login.data , 1)
                     router.push('/home')
                 }
-                // setCookie( 'token', login , 1)
-                // router.replace('/')
             } else {
                 basic.popconfirmTip = '未同意相关声明'
                 visible.value = true

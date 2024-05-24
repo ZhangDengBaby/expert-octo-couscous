@@ -7,6 +7,8 @@ import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const config = loadEnv(mode, './')
+  console.log('config', config);
+  
   return {
     plugins: [vue(), Components({
       resolvers: [AntDesignVueResolver({
@@ -32,20 +34,20 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       proxy: {
-        '/spark': {
-          target: config.VITE_BASIC_URL,
-          changeOrigin: true,
-          rewrite: (path) => {
-            return path.replace(/^\/spark/, '')
-          }
-        },
-        '/cos': {
-          target: config.VITE_BASIC_URL,
-          changeOrigin: true,
+        // '/sparkdev/': {
+        //   target: config.VITE_BASIC_URL,
+        //   changeOrigin: true,
+          // rewrite: (path) => {
+          //   return path.replace(/^\/spark/, '')
+          // }
+        // },
+        // '/cos': {
+          // target: config.VITE_BASIC_URL,
+          // changeOrigin: true,
           // rewrite: (path) => {
           //   return path.replace(/^\/cos/, '')
           // }
-        }
+        // }
       }
     }
   }

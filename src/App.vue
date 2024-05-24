@@ -11,13 +11,13 @@ router.beforeEach(to => {
   if (to.name === 'login' || to.name === 'registration') {
     isLogin.value = false
   } else {
-    // let token = getCookie('token')
-    // if (!token) {
-    //   router.push('/login')
-    //   isLogin.value = false
-    // } else {
-    isLogin.value = true
-    // }
+    let token = getCookie('login')
+    if (!token) {
+      router.push('/login')
+      isLogin.value = false
+    } else {
+      isLogin.value = true
+    }
   }
 })
 message.config({

@@ -26,10 +26,11 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, reactive, ref } from 'vue'
 import { HeartOutlined, VerticalAlignBottomOutlined, PlusOutlined, VerticalRightOutlined, PlayCircleOutlined, VerticalLeftOutlined, PauseCircleOutlined } from '@ant-design/icons-vue';
-import type { primitiveTypes } from '@/views/interface/public.ts' // 常用TS接口引入
+import type { primitiveTypes } from '@/views/interface/public' // 常用TS接口引入
 import { getDownloadUrl } from '@/utils/sdk'
+import EventBus from '@/api/eventBus'
 
 export default defineComponent({
     components: {
@@ -41,19 +42,22 @@ export default defineComponent({
     name: 'searchDetails',
     setup(props, ctx) {
         const audio = ref<HTMLAudioElement | null>(null);
-        const currentSong = ref<primitiveTypes>({
-            id: 1,
-            songName: 'hhhh',
-            singerName: 'aaaa',
-            url: ''
+            EventBus.on('playMusic',(data)=>{
+                currentSong.key = data.keyValue
+                currentSong.songName = data.songName
+                currentSong.singerName = data.singerName
+                play()
+            })
+        const currentSong = reactive<primitiveTypes>({
+            songName: '',
+            singerName: '',
+            url: '',
+            key: ''
         });
         let isPlay = ref<boolean>(false) // 是否是播放状态
-        const play = async (key: string) => {
-            let url = await getDownloadUrl(key)
-            currentSong.value.url = url + ''
-            console.log(111, currentSong.value.url);
-            console.log('audio', audio.value);
-
+        const play = async () => {
+            let url = await getDownloadUrl(currentSong.key)
+            currentSong.url = url + ''
             if (audio.value) {
                 audio.value.play();
                 isPlay.value = true
