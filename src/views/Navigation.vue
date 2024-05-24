@@ -1,5 +1,5 @@
 <template>
-    <!-- vue3页面 -->
+    <!-- 头部导航页面 -->
     <div class="nav">
         <a-menu v-model:selectedKeys="current" mode="horizontal" @select="menuHandleSelect" class="menu">
             <a-menu-item key="home">
@@ -8,11 +8,17 @@
                 </template>
                 主页
             </a-menu-item>
-            <a-menu-item key="about">
+            <!-- <a-menu-item key="three">
                 <template #icon>
                     <appstore-outlined />
                 </template>
-                Navigation Two
+                Three.js
+            </a-menu-item> -->
+            <a-menu-item key="music">
+                <template #icon>
+                    <CustomerServiceOutlined />
+                </template>
+                音乐
             </a-menu-item>
             <a-sub-menu key="sub1">
                 <template #icon>
@@ -29,46 +35,75 @@
                 </a-menu-item-group>
             </a-sub-menu>
         </a-menu>
+        <div class="Search">
+            <a-input-search v-model="basic.searchValue" placeholder="input search text" enter-button
+                @search="onSearch" />
+        </div>
         <div class="user">
-            <div>登录</div>
-            <div>注册</div>
+            <div @click="returnClick">退出</div>
+            <!-- <div @click="loginClick">登录</div> -->
+            <!-- <div @click="registrationClick">注册</div> -->
         </div>
     </div>
 </template>
 
 <script lang='ts'>
 import { defineComponent, ref, reactive } from 'vue'
-import { Menu, MenuItem, MenuItemGroup, SubMenu } from 'ant-design-vue'
-import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons-vue';
+import { Menu, MenuItem, MenuItemGroup, SubMenu, InputSearch } from 'ant-design-vue'
+import { MailOutlined, AppstoreOutlined, SettingOutlined, CustomerServiceOutlined } from '@ant-design/icons-vue';
 import { useRouter, useRoute } from 'vue-router';
+import type { primitiveTypes } from './interface/public' // 常用TS接口引入
+import { setCookie } from '@/utils/utils'
+
 export default defineComponent({
     components: {
         MailOutlined,
         AppstoreOutlined,
         SettingOutlined,
+        CustomerServiceOutlined,
         AMenu: Menu,
         AMenuItem: MenuItem,
         AMenuItemGroup: MenuItemGroup,
-        ASubMenu: SubMenu
+        ASubMenu: SubMenu,
+        AInputSearch: InputSearch
     },
     name: 'Navigation',
     setup() {
         const router = useRouter()
         const route = useRoute()
-        console.log(11, route.name);
-        const current = ref<string[]>(['home']);
-        //@ts-ignore
-        current.value = [route.name]
-        let basic = reactive({
-            current: 'home'
+        let current = ref<string[]>(['home']);
+        let basic = reactive<primitiveTypes>({
+            searchValue: ''
         })
+        router.beforeEach((to) => {
+            current.value = [to.name?.toString() || 'home']
+        })
+        // 点击菜单跳转页面
         let menuHandleSelect = () => {
             router.push('/' + current.value[0])
         }
+        const onSearch = (searchValue: string) => {
+            console.log('use value', searchValue);
+        }
+        const loginClick = () => { // 点击跳转登录页面
+            router.push('/login')
+        }
+        const registrationClick = () => { // 点击跳转注册页面
+            router.push('/registration')
+        }
+        const returnClick = () => { // 点击跳转登录页面
+            router.push('/login')
+            setCookie( 'login', '' , 0)
+        }
+        
         return {
             basic,
             menuHandleSelect,
-            current
+            current,
+            onSearch,
+            loginClick,
+            registrationClick,
+            returnClick
         }
     }
 })
@@ -78,6 +113,7 @@ export default defineComponent({
 .nav {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     height: 62px;
     border-bottom: 1px solid #f0f0f0;
 }
@@ -99,12 +135,12 @@ export default defineComponent({
     height: 100%;
     cursor: pointer;
 
-    :nth-child(1) {
+    >:nth-of-type(1) {
         background-color: #0052d9;
         color: #fff;
     }
 
-    :nth-child(1):hover {
+    >:nth-of-type(1):hover {
         background-color: #336dcc;
     }
 

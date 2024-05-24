@@ -1,8 +1,9 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/Home.vue'
+import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
+import HomeView from '../views/home/Home.vue'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  // history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(),
   routes: [
     {
       path: '/',
@@ -11,16 +12,30 @@ const router = createRouter({
     },
     {
       path: '/home',
-      name: 'home',
-      component: HomeView
+      redirect: '/'
     },
     {
-      path: '/about',
-      name: 'about',
+      path: '/music',
+      name: 'music',
+      component: () => import('../views/music/index.vue')
+    },
+    /*{
+      path: '/three',
+      name: 'three',
       // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
+      // this generates a separate chunk (three.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
+      component: () => import('../views/threeJs/threeView.vue')
+    },*/
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('../views/login/login.vue')
+    },
+    {
+      path: '/registration',
+      name: 'registration',
+      component: () => import('../views/registration/registration.vue')
     }
   ]
 })
